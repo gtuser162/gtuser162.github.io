@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Learn how to recognize suspicious messages, spot common scam tactics, and stay safer online."
+  />
+  <title>ClearSignal — Spot the scam</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b1015;
+      --panel: #111a21;
+      --panel-light: #17232b;
+      --text: #f2f7f4;
+      --muted: #a3b2ae;
+      --green: #b7f36b;
+      --mint: #6ee7c2;
+      --line: rgba(226, 245, 235, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(ellipse at 80% 5%, rgba(110, 231, 194, 0.12), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 750;
+      letter-spacing: -0.04em;
+      font-size: 1.15rem;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 11px;
+      color: #0b1015;
+      background: var(--green);
+      font-size: 1.1rem;
+    }
+
+    nav { display: flex; gap: 26px; }
+
+    nav a {
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-decoration: none;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 56px;
+      padding: 82px 0 100px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 750;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+    }
+
+    h1 {
+      max-width: 700px;
+      margin: 18px 0;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      line-height: 0.99;
+      letter-spacing: -0.075em;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .hero-copy {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 1.12rem;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 0 20px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 160ms ease, background 160ms ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button.primary {
+      color: #10170c;
+      border-color: var(--green);
+      background: var(--green);
+    }
+
+    .button.secondary { color: var(--text); }
+
+    .signal-card {
+      position: relative;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(23, 35, 43, 0.94), rgba(14, 21, 27, 0.94));
+      box-shadow: 0 28px 90px rgba(0, 0, 0, 0.28);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .status {
+      padding: 5px 10px;
+      border: 1px solid rgba(183, 243, 107, 0.24);
+      border-radius: 999px;
+      color: var(--green);
+      background: rgba(183, 243, 107, 0.08);
+      font-size: 0.76rem;
+    }
+
+    .message {
+      margin: 22px 0;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(7, 12, 16, 0.42);
+    }
+
+    .message small { color: var(--muted); }
+
+    .message p {
+      margin: 10px 0 0;
+      color: #dfe9e4;
+      font-size: 0.94rem;
+    }
+
+    .warning {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 15px;
+      border-radius: 14px;
+      background: rgba(255, 180, 92, 0.09);
+      color: #ffd7a8;
+      font-size: 0.9rem;
+    }
+
+    .warning strong { display: block; }
+
+    section { padding: 76px 0; }
+
+    .section-heading {
+      max-width: 680px;
+      margin-bottom: 32px;
+    }
+
+    .section-heading h2 {
+      margin: 10px 0;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1.08;
+      letter-spacing: -0.06em;
+    }
+
+    .section-heading p { color: var(--muted); }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .info-card {
+      padding: 23px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(17, 26, 33, 0.72);
+    }
+
+    .icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      margin-bottom: 18px;
+      border-radius: 13px;
+      color: var(--green);
+      background: rgba(183, 243, 107, 0.1);
+      font-size: 1.15rem;
+    }
+
+    .info-card h3 { margin: 0 0 8px; }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      counter-reset: step;
+    }
+
+    .step {
+      counter-increment: step;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .step::before {
+      content: "0" counter(step);
+      color: var(--mint);
+      font-size: 0.82rem;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+    }
+
+    .step h3 { margin: 12px 0 6px; }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .reminder {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 30px;
+      padding: 34px;
+      border: 1px solid rgba(183, 243, 107, 0.2);
+      border-radius: 22px;
+      background: linear-gradient(115deg, rgba(183, 243, 107, 0.1), rgba(110, 231, 194, 0.04));
+    }
+
+    .reminder h2 {
+      margin: 0 0 8px;
+      letter-spacing: -0.04em;
+    }
+
+    .reminder p {
+      max-width: 650px;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .reminder-mark {
+      color: var(--green);
+      font-size: 3rem;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 26px 0 34px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero { grid-template-columns: 1fr; gap: 36px; padding: 58px 0 70px; }
+      .grid, .steps { grid-template-columns: 1fr; }
+      nav { gap: 14px; }
+      nav a { font-size: 0.82rem; }
+      .reminder { grid-template-columns: 1fr; }
+      .reminder-mark { display: none; }
+    }
+
+    @media (max-width: 430px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      nav a:first-child { display: none; }
+      .signal-card { padding: 19px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a class="brand" href="#" aria-label="ClearSignal home">
+      <span class="brand-mark" aria-hidden="true">✳</span>
+      ClearSignal
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#warning-signs">Warning signs</a>
+      <a href="#what-to-do">What to do</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div>
+        <div class="eyebrow">Stay alert. Stay in control.</div>
+        <h1>Spot the scam.<br /><span>Keep your cool.</span></h1>
+        <p class="hero-copy">
+          Scams are designed to rush you. ClearSignal shares simple, practical
+          guidance to help you pause, check the details, and make a safer call.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="#warning-signs">Learn the warning signs</a>
+          <a class="button secondary" href="#what-to-do">See what to do</a>
+        </div>
+      </div>
+
+      <aside class="signal-card" aria-label="Example of a suspicious message">
+        <div class="card-top">
+          <span>MESSAGE CHECK</span>
+          <span class="status">Pause and check</span>
+        </div>
+        <div class="message">
+          <small>Unknown sender · Just now</small>
+          <p>“Your account will be closed today. Verify your details immediately using this link.”</p>
+        </div>
+        <div class="warning">
+          <span aria-hidden="true">⚠</span>
+          <div>
+            <strong>Pressure is a warning sign</strong>
+            Urgency can be used to stop you from checking whether a message is genuine.
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="warning-signs" class="wrap">
+      <div class="section-heading">
+        <div class="eyebrow">Know the patterns</div>
+        <h2>Most scams leave clues.</h2>
+        <p>One sign alone doesn’t prove a message is fraudulent. Several together are a reason to stop and verify independently.</p>
+      </div>
+
+      <div class="grid">
+        <article class="info-card">
+          <div class="icon" aria-hidden="true">⏱</div>
+          <h3>Artificial urgency</h3>
+          <p>Threats, deadlines, or “act now” demands are meant to make you react before you think.</p>
+        </article>
+        <article class="info-card">
+          <div class="icon" aria-hidden="true">🔑</div>
+          <h3>Requests for secrets</h3>
+          <p>Be cautious of unexpected requests for passwords, verification codes, payment details, or recovery phrases.</p>
+        </article>
+        <article class="info-card">
+          <div class="icon" aria-hidden="true">🔗</div>
+          <h3>Unusual links or payment</h3>
+          <p>Lookalike web addresses, unfamiliar payment methods, and requests to move money deserve extra scrutiny.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="what-to-do" class="wrap">
+      <div class="section-heading">
+        <div class="eyebrow">A calmer next step</div>
+        <h2>Pause. Verify. Then decide.</h2>
+      </div>
+
+      <div class="steps">
+        <article class="step">
+          <h3>Don’t rush</h3>
+          <p>Stop before clicking, replying, sharing information, or sending money.</p>
+        </article>
+        <article class="step">
+          <h3>Check another way</h3>
+          <p>Use a website or phone number you find independently—not details in the message.</p>
+        </article>
+        <article class="step">
+          <h3>Protect your accounts</h3>
+          <p>If you already shared information, change affected passwords and contact your bank or service provider through official channels.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="reminder">
+        <div>
+          <h2>When in doubt, take a beat.</h2>
+          <p>A legitimate request can wait while you verify it. A little time and a separate check can help you avoid a costly mistake.</p>
+        </div>
+        <div class="reminder-mark" aria-hidden="true">✳</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>ClearSignal</span> · Practical scam-awareness information.
+  </footer>
+</body>
+</html>
